@@ -1,0 +1,19 @@
+{
+    "name": "bapti/tp05",
+    "authors": [{
+        "name": "baptiste.steinmetz",
+        "email": "baptiste.steinmetz67@gmail.com"
+    }],
+    "require": {
+        "slim/slim": "4.*",
+        "php-di/php-di": "^6.3",
+        "slim/psr7": "^1.2",
+        "tuupola/slim-jwt-auth": "^3.5",
+        "vlucas/phpdotenv": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}

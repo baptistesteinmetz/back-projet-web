@@ -1,0 +1,34 @@
+
+<?php 
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
+use Slim\App;
+use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+
+use App\Middlewares\CorsMiddleware;
+
+return function(App $app) {
+
+    $app->options('/{routes:.*}', function (Request $request, Response $response) {
+        return $response;
+    });
+
+    $app->add(CorsMiddleware::class);
+
+    $app->get('/', HomeController::class . ":home");
+
+    $app->group('/user', function(Group $group){
+        // definition des routes
+        $group->post("/login", "App\Controllers\UserController:login");
+        $group->post("/register", "App\Controllers\UserController:register");
+        
+    });
+
+
+    // $app->get('/bob', function (Request $request, Response $response, array $args) {
+    //     $response->getBody()->write("Hello bob");
+    //     return $response;
+    // });
+};
