@@ -56,7 +56,7 @@ Product:
                 fixed: false
         release_date:
             type: datetime
-            nullable: false
+            nullable: true
             options:
                 fixed: false
     lifecycleCallbacks: {  }

@@ -25,7 +25,12 @@ return function(App $app) {
         $group->post("/register", "App\Controllers\UserController:register");
         
     });
-
+    $app->group('/product', function(Group $group){
+        // definition des routes
+        $group->get("/all", "App\Controllers\ProductController:getAll");
+        $group->get("/single", "App\Controllers\UserController:register");
+        
+    });
 
     // $app->get('/bob', function (Request $request, Response $response, array $args) {
     //     $response->getBody()->write("Hello bob");
