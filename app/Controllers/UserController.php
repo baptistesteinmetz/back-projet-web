@@ -11,7 +11,8 @@ class UserController {
         $data = $request->getParsedBody();
         $login = $data['login'] ?? "";
         $password = $data['password'] ?? "";
-
+        echo $login;
+        echo $password;
         if($login !== "baptiste" || $password !== "baptiste") {
             $response->getBody()->write(json_encode([
                 "success" => false,
