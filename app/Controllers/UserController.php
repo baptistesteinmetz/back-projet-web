@@ -44,9 +44,9 @@ class UserController {
                     "data" => $data,
                 ]));
                 $response
-                ->withHeader("Authorization", $token_jwt)
-                ->withHeader("Content-Type", "application/json")
-                ->withHeader('Access-Control-Expose-Headers', '*');
+                // ->withHeader("Authorization", $token_jwt)
+                ->withHeader("Content-Type", "application/json");
+                // ->withHeader('Access-Control-Expose-Headers', '*');
             } else {     
                 $response->getBody()->write(json_encode([
                     "success" => false
@@ -118,8 +118,8 @@ class UserController {
             $entityManager->persist($user);
             $entityManager->flush();
             $response->getBody()->write(json_encode($result));
-            $response->withHeader("Content-Type", "application/json")
-            ->withHeader('Access-Control-Expose-Headers', '*');
+            $response->withHeader("Content-Type", "application/json");
+            // ->withHeader('Access-Control-Expose-Headers', '*');
         }
         return $response;
     }
