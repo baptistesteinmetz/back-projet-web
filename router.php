@@ -28,7 +28,7 @@ return function(App $app) {
     $app->group('/product', function(Group $group){
         // definition des routes
         $group->get("/all", "App\Controllers\ProductController:getAll");
-        $group->get("/single", "App\Controllers\UserController:register");
+        $group->get("/{id}", "App\Controllers\ProductController:getOne");
         
     });
 
