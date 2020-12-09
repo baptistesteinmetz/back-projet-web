@@ -15,9 +15,23 @@ class ProductController {
         require_once  __DIR__ . './../../bootstrap.php';
         $products = $entityManager->getRepository('Product')->findAll();
         if($products) {
+            $data = [];
+            foreach($products as $product) {
+                $data[] = [
+                    'idProduct' => $product->getIdProduct(),
+                    'name' => $product->getName(),
+                    'price' => $product->getPrice(),
+                    'src' => $product->getSrc(),
+                    'description' => $product->getDescription(),
+                    'primary_color' => $product->getPrimaryColor(),
+                    'secondary_color' => $product->getSecondaryColor(),
+                    'platform' => $product->getPlatform(),
+                    'release_date' => $product->getReleaseDate(),
+                ];
+            }
             $response->getBody()->write(json_encode([
                 "success" => true,
-                "data" => $products
+                "data" => $data
             ]));
         }
         else {
@@ -31,14 +45,27 @@ class ProductController {
         ->withHeader('Access-Control-Expose-Headers', '*');
     }
 
+
+
     public function getOne(Request $request, Response $response, $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
-        $products = $entityManager->getRepository('Product')->findOneByIdProduct($id);
-        if($products) {
+        $product = $entityManager->getRepository('Product')->findOneByIdProduct($id);
+        if($product) {
+            $data[] = [
+                'idProduct' => $product->getIdProduct(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'src' => $product->getSrc(),
+                'description' => $product->getDescription(),
+                'primary_color' => $product->getPrimaryColor(),
+                'secondary_color' => $product->getSecondaryColor(),
+                'platform' => $product->getPlatform(),
+                'release_date' => $product->getReleaseDate(),
+            ];
             $response->getBody()->write(json_encode([
                 "success" => true,
-                $products
+                'data' => $data
             ]));
         }
         else {

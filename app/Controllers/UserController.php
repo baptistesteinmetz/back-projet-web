@@ -11,6 +11,8 @@ use User;
 
 class UserController {
 
+
+    // post login generating JWT
     public function login(Request $request, Response $response, $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $err=false;
@@ -18,35 +20,18 @@ class UserController {
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
         }
-        // if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login))   {
-        //     $err = true;
-        // }
-        // if (!preg_match("/[a-zA-Z0-9]{1,20}/",$pass))  {
-        //     $err=true;
-        // }
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login));
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
                 $data = array('nom' => $user->getFirstname(), 'prenom' => $user->getLastname());
-                $issuedAt = time();
-                $payload = [
-                    "user" => [
-                        "id" => $user->getIdUser()
-                    ],
-                    "iat" => $issuedAt,
-                    "exp" => $issuedAt + 60,
-                ];
-                $token_jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], "HS256");
-        
+                $response = $this->createJwt($response, $user);
                 $response->getBody()->write(json_encode([
                     "success" => true,
                     "data" => $data,
                 ]));
                 $response
-                // ->withHeader("Authorization", $token_jwt)
                 ->withHeader("Content-Type", "application/json");
-                // ->withHeader('Access-Control-Expose-Headers', '*');
             } else {     
                 $response->getBody()->write(json_encode([
                     "success" => false
@@ -71,7 +56,7 @@ class UserController {
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
         }
-        // TODO : pregmatch à améliorer trop de choses passent
+        // TODO : pregmatch à améliorer
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
             $err=true;
         }
@@ -124,4 +109,56 @@ class UserController {
         }
         return $response;
     }
+
+    // get User by ID
+    public function getUser(Request $request, Response $response, array $args) {
+        require_once  __DIR__ . './../../bootstrap.php';
+        $id = intval($args['id']);
+        $user = $entityManager->getRepository('User')->findOneByIdUser($id);
+        if($user) {
+            $data = [
+                'idUser' => $user->getIdUser(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'login' => $user->getLogin(),
+                'password' => $user->getPassword(),
+                'address' => $user->getAddress(),
+                'zipcode' => $user->getZipcode(),
+                'city' => $user->getCity(),
+                'gender' => $user->getGender(),
+                'mail' => $user->getMail(),
+                'country' => $user->getCountry(),
+                'phone' => $user->getPhone(),
+            ];
+            $response = $this->createJwT($response, $user);
+            $response->getBody()->write(json_encode([
+                'success' => true,
+                'data' => $data
+            ]));
+        }
+        else {
+            $response = $response->withStatus(401);
+        }
+
+        $response->withHeader("Content-Type", "application/json");
+        return $response;
+    }
+
+    // create JWT
+    function createJwt (Response $response, User $user) : Response {
+        $userid = $user->getIdUser();
+        $issuedAt = time();
+        $expirationTime = $issuedAt + 60; // jwt valid for 60 seconds from the issued time
+        $payload = array(
+            'userid' => $userid,
+            'iat' => $issuedAt,
+            'exp' => $expirationTime
+        );
+        $token_jwt = JWT::encode($payload,$_ENV['JWT_SECRET'], "HS256");
+        $response = $response->withHeader("Authorization", "Bearer {$token_jwt}");
+        return $response;
+    }
+    
 }
+
+

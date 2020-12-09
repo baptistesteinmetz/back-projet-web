@@ -13,10 +13,14 @@ class CorsMiddleware
         $response = $handler->handle($request);
 
         $response = $response
-            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:4200')
-            ->withHeader('Access-Control-Allow-Headers', '*')
-            ->withHeader('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
-            ->withHeader('Access-Control-Allow-Credentials', 'true');
+        ->withHeader("Content-Type", "application/json")
+        ->withHeader('Access-Control-Allow-Credentials', 'true')
+        ->withHeader('Access-Control-Allow-Origin', "*")
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+        ->withHeader('Access-Control-Expose-Headers', '*')
+        ->withHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->withAddedHeader('Cache-Control', 'post-check=0, pre-check=0');
         return $response;
     }
 }

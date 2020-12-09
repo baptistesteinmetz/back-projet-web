@@ -1,61 +1,57 @@
 <?php
-namespace App\Models;
-
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
-
 /**
  * Product
  *
  * @ORM\Table(name="product")
  * @ORM\Entity
  */
-class Product{
+class Product {
     
     /**
      * @var int
      */
-    public $idProduct;
+    private $idProduct;
 
     /**
      * @var string|null
      */
-    public $name;
+    private $name;
 
     /**
      * @var float
      */
-    public $price;
+    private $price;
 
     /**
      * @var string
      */
-    public $src;
+    private $src;
 
     /**
      * @var string
      */
-    public $description;
+    private $description;
 
     /**
      * @var string
      */
-    public $primary_color;
+    private $primary_color;
 
     /**
      * @var string|null
      */
-    public $secondary_color;
+    private $secondary_color;
 
     /**
      * @var string|null
      */
-    public $platform;
+    private $platform;
 
     /**
      * @var \DateTime|null
      */
-    public $release_date;
+    private $release_date;
 
 
     /**
@@ -258,11 +254,5 @@ class Product{
     public function getReleaseDate()
     {
         return $this->release_date;
-    }
-
-    public function jsonSerialize() {
-        return [
-            'releaseDate' => $this->release_date
-        ];
     }
 }
