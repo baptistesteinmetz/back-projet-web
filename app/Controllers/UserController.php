@@ -41,7 +41,7 @@ class UserController {
         } else {
             $response->getBody()->write(json_encode([
                 "success" => false,
-                "body" => $body,
+                "body" => $user,
             ]));
             $response = $response->withStatus(401);
         }
@@ -99,7 +99,7 @@ class UserController {
             ;
             $result = [
                 "success" => true,
-                "user" => $body,
+                "user" => $user,
             ];
             $entityManager->persist($user);
             $entityManager->flush();
