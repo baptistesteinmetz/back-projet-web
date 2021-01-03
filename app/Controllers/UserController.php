@@ -22,7 +22,7 @@ class UserController {
         }
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
-            $user = $userRepo->findOneBy(array('login' => $login));
+            $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
             if ($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
