@@ -24,10 +24,11 @@ class UserController {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login));
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
+                $data = array('id' => $user->getIdUser());
                 $response = $this->createJwt($response, $user);
                 $response->getBody()->write(json_encode([
                     "success" => true,
-                    "data" => $user,
+                    "data" => $data,
                 ]));
                 $response
                 ->withHeader("Content-Type", "application/json");
@@ -98,7 +99,7 @@ class UserController {
             ;
             $result = [
                 "success" => true,
-                "user" => $user,
+                "data" => $user->getIdUser(),
             ];
             $entityManager->persist($user);
             $entityManager->flush();
