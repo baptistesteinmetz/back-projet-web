@@ -26,7 +26,7 @@ class UserController {
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
-                    'idUser' => $user->getIdProduct(),
+                    'idUser' => $user->getIdUser(),
                     'firstname' => $user->getFirstname(),
                     'lastname' => $user->getLastname(),
                     'login' => $user->getLogin(),
