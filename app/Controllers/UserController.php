@@ -51,7 +51,6 @@ class UserController {
     public function register(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $userRepo = $entityManager->getRepository('User');
-        var_dump($userRepo);
         $body = $request->getParsedBody();
         $err = false;
         foreach($body as $key => $value){
