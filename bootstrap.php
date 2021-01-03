@@ -11,7 +11,7 @@ $isDevMode = true;
 $config = Setup::createYAMLMetadataConfiguration(array(__DIR__ . "/config/yaml"), $isDevMode);
 
 $conn = array(
-'host' => 'ec2-52-31-233-101.eu-west-1.compute.amazonaws.com',
+'host' => 'https://ec2-52-31-233-101.eu-west-1.compute.amazonaws.com',
 'port' => '5432',
 'driver' => 'pdo_pgsql',
 'user' => 'wlyfxrndazeptl',

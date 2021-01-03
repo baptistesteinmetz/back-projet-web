@@ -20,7 +20,6 @@ return function(App $app) {
     $app->get('/', HomeController::class . ":home");
 
     $app->group('/user', function(Group $group){
-        echo 'here';
         // definition des routes
         $group->post("/login", "App\Controllers\UserController:login");
         $group->post("/register", "App\Controllers\UserController:register");
