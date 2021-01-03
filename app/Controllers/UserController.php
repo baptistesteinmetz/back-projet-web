@@ -25,9 +25,23 @@ class UserController {
             $user = $userRepo->findOneBy(array('login' => $login));
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);
+                $data = [
+                    'idUser' => $product->getIdProduct(),
+                    'firstname' => $user->getFirstname(),
+                    'lastname' => $user->getLastname(),
+                    'login' => $user->getLogin(),
+                    'password' => $user->getPassword(),
+                    'address' => $user->getAddress(),
+                    'zipcode' => $user->getZipcode(),
+                    'city' => $user->getCity(),
+                    'gender' => $user->getGender(),
+                    'mail' => $user->getMail(),
+                    'country' => $user->getCountry(),
+                    'phone' => $user->getPhone(),
+                ];
                 $response->getBody()->write(json_encode([
                     "success" => true,
-                    "data" => $user->getIdUser(),
+                    "data" => $data,
                 ]));
                 $response
                 ->withHeader("Content-Type", "application/json");
@@ -98,9 +112,23 @@ class UserController {
             ;
             $entityManager->persist($user);
             $entityManager->flush();
+            $data = [
+                'idUser' => $product->getIdProduct(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'login' => $user->getLogin(),
+                'password' => $user->getPassword(),
+                'address' => $user->getAddress(),
+                'zipcode' => $user->getZipcode(),
+                'city' => $user->getCity(),
+                'gender' => $user->getGender(),
+                'mail' => $user->getMail(),
+                'country' => $user->getCountry(),
+                'phone' => $user->getPhone(),
+            ];
             $result = [
                 "success" => true,
-                "data" => $user->getIdUser(),
+                "data" => $data,
             ];
             $response->getBody()->write(json_encode($result));
             $response->withHeader("Content-Type", "application/json");
