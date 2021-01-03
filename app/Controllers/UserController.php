@@ -21,7 +21,7 @@ class UserController {
             ${$key} = $value ?? "";
         }
         if (!$err) {
-            $userRepo = $entityManager->getRepository('Client');
+            $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login));
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
                 $data = array('nom' => $user->getFirstname(), 'prenom' => $user->getLastname());
@@ -50,7 +50,7 @@ class UserController {
 
     public function register(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
-        $userRepo = $entityManager->getRepository('Client');
+        $userRepo = $entityManager->getRepository('User');
         var_dump($userRepo);
         $body = $request->getParsedBody();
         $err = false;
@@ -114,7 +114,7 @@ class UserController {
 
     public function update(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
-        $userRepo = $entityManager->getRepository('Client');
+        $userRepo = $entityManager->getRepository('User');
         $body = $request->getParsedBody();
         $err = false;
         foreach($body as $key => $value){
@@ -177,9 +177,10 @@ class UserController {
 
     // get User by ID
     public function getUser(Request $request, Response $response, array $args) {
+        var_dump($request);
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
-        $user = $entityManager->getRepository('Client')->findOneByIdUser($id);
+        $user = $entityManager->getRepository('User')->findOneByIdUser($id);
         if($user) {
             $data = [
                 'idUser' => $user->getIdUser(),
