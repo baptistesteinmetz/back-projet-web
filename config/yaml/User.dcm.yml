@@ -1,6 +1,6 @@
 User:
     type: entity
-    table: user
+    table: client
     id:
         idUser:
             type: integer
