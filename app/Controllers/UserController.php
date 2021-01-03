@@ -97,12 +97,12 @@ class UserController {
             ->setLogin($login)
             ->setGender($gender)
             ;
+            $entityManager->persist($user);
+            $entityManager->flush();
             $result = [
                 "success" => true,
                 "data" => $user->getIdUser(),
             ];
-            $entityManager->persist($user);
-            $entityManager->flush();
             $response->getBody()->write(json_encode($result));
             $response->withHeader("Content-Type", "application/json");
             // ->withHeader('Access-Control-Expose-Headers', '*');
