@@ -24,21 +24,8 @@ class UserController {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login));
             if ($user && $login == $user->getLogin() && $password == $user->getPassword()) {
+                $data = array('id' => $user->getIdUser());
                 $response = $this->createJwt($response, $user);
-                $data = [
-                    'idUser' => $product->getIdProduct(),
-                    'firstname' => $user->getFirstname(),
-                    'lastname' => $user->getLastname(),
-                    'login' => $user->getLogin(),
-                    'password' => $user->getPassword(),
-                    'address' => $user->getAddress(),
-                    'zipcode' => $user->getZipcode(),
-                    'city' => $user->getCity(),
-                    'gender' => $user->getGender(),
-                    'mail' => $user->getMail(),
-                    'country' => $user->getCountry(),
-                    'phone' => $user->getPhone(),
-                ];
                 $response->getBody()->write(json_encode([
                     "success" => true,
                     "data" => $data,
@@ -110,26 +97,13 @@ class UserController {
             ->setLogin($login)
             ->setGender($gender)
             ;
+
             $entityManager->persist($user);
-            $entityManager->flush();
-            $data = [
-                'idUser' => $product->getIdProduct(),
-                'firstname' => $user->getFirstname(),
-                'lastname' => $user->getLastname(),
-                'login' => $user->getLogin(),
-                'password' => $user->getPassword(),
-                'address' => $user->getAddress(),
-                'zipcode' => $user->getZipcode(),
-                'city' => $user->getCity(),
-                'gender' => $user->getGender(),
-                'mail' => $user->getMail(),
-                'country' => $user->getCountry(),
-                'phone' => $user->getPhone(),
-            ];
             $result = [
                 "success" => true,
-                "data" => $data,
+                "data" => $user->getIdUser(),
             ];
+            $entityManager->flush();
             $response->getBody()->write(json_encode($result));
             $response->withHeader("Content-Type", "application/json");
             // ->withHeader('Access-Control-Expose-Headers', '*');
