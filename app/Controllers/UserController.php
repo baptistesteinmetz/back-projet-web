@@ -178,7 +178,7 @@ class UserController {
     public function getUser(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
-        $user = $entityManager->getRepository('User')->findOneByIdUser($id);
+        $user = $entityManager->getRepository('User')->findOneBy(array("idUser" => $id));
         var_dump($user);        
         // if($user) {
         //     $data = [
