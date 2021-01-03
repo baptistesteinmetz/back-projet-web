@@ -112,11 +112,26 @@ class UserController {
             ;
 
             $entityManager->persist($user);
+
+            $entityManager->flush();
+            $data = [
+                'idUser' => $user->getIdUser(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'login' => $user->getLogin(),
+                'password' => $user->getPassword(),
+                'address' => $user->getAddress(),
+                'zipcode' => $user->getZipcode(),
+                'city' => $user->getCity(),
+                'gender' => $user->getGender(),
+                'mail' => $user->getMail(),
+                'country' => $user->getCountry(),
+                'phone' => $user->getPhone(),
+            ];
             $result = [
                 "success" => true,
-                "data" => $user->getIdUser(),
+                "data" => $data,
             ];
-            $entityManager->flush();
             $response->getBody()->write(json_encode($result));
             $response->withHeader("Content-Type", "application/json");
             // ->withHeader('Access-Control-Expose-Headers', '*');
