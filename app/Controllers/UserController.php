@@ -179,33 +179,32 @@ class UserController {
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
         $user = $entityManager->getRepository('User')->findOneBy(array("idUser" => $id));
-        var_dump($user);        
-        // if($user) {
-        //     $data = [
-        //         'idUser' => $user->getIdUser(),
-        //         'firstname' => $user->getFirstname(),
-        //         'lastname' => $user->getLastname(),
-        //         'login' => $user->getLogin(),
-        //         'password' => $user->getPassword(),
-        //         'address' => $user->getAddress(),
-        //         'zipcode' => $user->getZipcode(),
-        //         'city' => $user->getCity(),
-        //         'gender' => $user->getGender(),
-        //         'mail' => $user->getMail(),
-        //         'country' => $user->getCountry(),
-        //         'phone' => $user->getPhone(),
-        //     ];
-        //     $response = $this->createJwT($response, $user);
-        //     $response->getBody()->write(json_encode([
-        //         'success' => true,
-        //         'data' => $data
-        //     ]));
-        // }
-        // else {
-        //     $response = $response->withStatus(401);
-        // }
+        if($user) {
+            $data = [
+                'idUser' => $user->getIdUser(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'login' => $user->getLogin(),
+                'password' => $user->getPassword(),
+                'address' => $user->getAddress(),
+                'zipcode' => $user->getZipcode(),
+                'city' => $user->getCity(),
+                'gender' => $user->getGender(),
+                'mail' => $user->getMail(),
+                'country' => $user->getCountry(),
+                'phone' => $user->getPhone(),
+            ];
+            $response = $this->createJwT($response, $user);
+            $response->getBody()->write(json_encode([
+                'success' => true,
+                'data' => $data
+            ]));
+        }
+        else {
+            $response = $response->withStatus(401);
+        }
 
-        // $response->withHeader("Content-Type", "application/json");
+        $response->withHeader("Content-Type", "application/json");
         return $response;
     }
 
