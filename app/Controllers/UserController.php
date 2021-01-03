@@ -110,6 +110,70 @@ class UserController {
         return $response;
     }
 
+
+    public function update(Request $request, Response $response, array $args) {
+        require_once  __DIR__ . './../../bootstrap.php';
+        $userRepo = $entityManager->getRepository('User');
+        $body = $request->getParsedBody();
+        $err = false;
+        foreach($body as $key => $value){
+            ${$key} = $value ?? "";
+        }
+        // TODO : pregmatch à améliorer
+        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
+            $err=true;
+        }
+        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login) ||$login == "")   {
+            $err = true;
+        }
+        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$adress) ||$adress == "")  {
+            $err=true;
+        }
+        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$mail) ||$mail == "")   {
+            $err = true;
+        }
+        if (!preg_match("/[a-zA-Z]/",$firstname) ||$firstname == "")  {
+            $err=true;
+        }
+        if (!preg_match("/[a-zA-Z]/",$lastname) ||$lastname == "")   {
+            $err = true;
+        }
+
+        if($err) {
+            $result = [
+                "success" => false,
+            ];
+            $response = $response->withStatus(401);
+        }
+        else {
+            $user = $userRepo->findOneBy(array('idUser' => $idUser));
+            $user
+            ->setFirstname($firstname)
+            ->setLastname($lastname)
+            ->setAddress($adress)
+            ->setCity($city)
+            ->setZipcode($zipcode)
+            ->setMail($mail)
+            ->setPhone($phone)
+            ->setCountry($country)
+            ->setPassword($password)
+            ->setLogin($login)
+            ->setGender($gender)
+            ;
+            $result = [
+                "success" => true,
+                "user" => $body,
+            ];
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $response->getBody()->write(json_encode($result));
+            $response->withHeader("Content-Type", "application/json");
+            // ->withHeader('Access-Control-Expose-Headers', '*');
+        }
+        return $response;
+    }
+
+
     // get User by ID
     public function getUser(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';

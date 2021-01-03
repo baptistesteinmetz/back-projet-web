@@ -23,6 +23,7 @@ return function(App $app) {
         // definition des routes
         $group->post("/login", "App\Controllers\UserController:login");
         $group->post("/register", "App\Controllers\UserController:register");
+        $group->post("/update", "App\Controllers\UserController:update");
         $group->get("/get/{id}", "App\Controllers\UserController:getUser");
         
     });
@@ -33,8 +34,4 @@ return function(App $app) {
         
     });
 
-    // $app->get('/bob', function (Request $request, Response $response, array $args) {
-    //     $response->getBody()->write("Hello bob");
-    //     return $response;
-    // });
 };

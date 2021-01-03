@@ -52,7 +52,7 @@ class ProductController {
         $id = intval($args['id']);
         $product = $entityManager->getRepository('Product')->findOneByIdProduct($id);
         if($product) {
-            $data[] = [
+            $data = [
                 'idProduct' => $product->getIdProduct(),
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
