@@ -240,6 +240,7 @@ class UserController {
         require_once  __DIR__ . './../../bootstrap.php';
         $userRepo = $entityManager->getRepository('User');
         $body = $request->getParsedBody();
+        var_dump($body);
         $user = $userRepo->findOneBy(array('idUser' => $body['idUser']));
         if($user) {
             $response->getBody()->write(json_encode([

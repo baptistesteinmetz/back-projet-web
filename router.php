@@ -22,6 +22,7 @@ return function(App $app) {
     $app->group('/user', function(Group $group){
         // definition des routes
         $group->post("/login", "App\Controllers\UserController:login");
+        $group->post("/logoff", "App\Controllers\UserController:logoff");
         $group->post("/register", "App\Controllers\UserController:register");
         $group->post("/update", "App\Controllers\UserController:update");
         $group->get("/get/{id}", "App\Controllers\UserController:getUser");
