@@ -81,10 +81,9 @@ class ProductController {
 
     public function buyArticle(Request $request, Response $response, $args) {
         require_once __DIR__ . './../../bootstrap.php';
-        var_dump($args);
+        var_dump($request->getParsedBody());
         $products = $args['data'];
         var_dump($products);
-
         $price = 0;
         foreach($products as $product) {
             /** @var Product $product  */
