@@ -210,7 +210,7 @@ class UserController {
         var_dump($args);
         $userRepo = $entityManager->getRepository('User');
         var_dump($id);
-        $user = $userRepo->findOneBy(array("idUser" => $id));
+        $user = $userRepo->findAll();
         var_dump($user);
         if($user) {
             $data = [
