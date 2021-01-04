@@ -31,7 +31,7 @@ return function(App $app) {
         // definition des routes
         $group->get("/all", "App\Controllers\ProductController:getAll");
         $group->get("/{id}", "App\Controllers\ProductController:getOne");
-        $group->get("/buy", "App\Controllers\ProductController:buyArticle");
+        // $group->get("/buy", "App\Controllers\ProductController:buyArticle");
     });
 
 };
