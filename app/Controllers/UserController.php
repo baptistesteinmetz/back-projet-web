@@ -147,9 +147,7 @@ class UserController {
         $err = false;
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
-            var_dump(${$key});
         }
-        // TODO : pregmatch à améliorer
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
             $err=true;
         }
@@ -234,7 +232,6 @@ class UserController {
         else {
             $response = $response->withStatus(401);
         }
-
         $response->withHeader("Content-Type", "application/json");
         return $response;
     }

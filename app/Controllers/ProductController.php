@@ -79,4 +79,29 @@ class ProductController {
         ->withHeader('Access-Control-Expose-Headers', '*');
     }
 
+    public function buyArticle(Request $request, Response $response, $args) {
+        require_once __DIR__ . './../../bootstrap.php';
+        $products = $args['data'];
+        $price = 0;
+        foreach($products as $product) {
+            /** @var Product $product  */
+            $price += $product->getPrice();
+        }
+
+        if($price == 0){
+            $response->getBody()->write(json_encode([
+                "success" => false,
+            ]));
+            $response = $response->withStatus(401);
+        }
+        else {
+            $data = 'ok';
+            $response->getBody()->write(json_encode([
+                "success" => true,
+                'data' => $data
+            ]));
+        }
+
+    }
+
 }
