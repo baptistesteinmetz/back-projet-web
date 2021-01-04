@@ -101,7 +101,9 @@ class ProductController {
                 'data' => $data
             ]));
         }
-
+        return $response
+        ->withHeader("Content-Type", "application/json")
+        ->withHeader('Access-Control-Expose-Headers', '*');
     }
 
 }
