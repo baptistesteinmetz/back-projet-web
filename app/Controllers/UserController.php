@@ -175,7 +175,7 @@ class UserController {
             $response = $response->withStatus(401);
         }
         else {
-            $user = $userRepo->findOneBy(array('idUser' => $id));
+            $user = $userRepo->findOneBy(array('id_user' => $id));
             $user
             ->setFirstname($firstname)
             ->setLastname($lastname)
@@ -208,7 +208,7 @@ class UserController {
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
         $userRepo = $entityManager->getRepository('User');
-        $user = $userRepo->findOneBy(array("idUser" => $id));
+        $user = $userRepo->findOneBy(array("id_user" => $id));
         var_dump($user);
         if($user) {
             $data = [
