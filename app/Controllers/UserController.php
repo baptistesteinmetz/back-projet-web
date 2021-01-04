@@ -236,7 +236,7 @@ class UserController {
         return $response;
     }
 
-    public function logOff(Request $request, Response $response, array $args) {
+    public function logoff(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $userRepo = $entityManager->getRepository('User');
         $body = $request->getParsedBody();
