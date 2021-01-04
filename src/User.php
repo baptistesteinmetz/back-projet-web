@@ -3,7 +3,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="client")
  * @ORM\Entity
  */
 class User {
