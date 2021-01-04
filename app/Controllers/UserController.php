@@ -147,6 +147,7 @@ class UserController {
         $err = false;
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
+            var_dump(${$key});
         }
         // TODO : pregmatch à améliorer
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
@@ -175,7 +176,7 @@ class UserController {
             $response = $response->withStatus(401);
         }
         else {
-            $user = $userRepo->findOneBy(array('id_user' => $id));
+            $user = $userRepo->findOneBy(array('idUser' => $idUser));
             $user
             ->setFirstname($firstname)
             ->setLastname($lastname)
@@ -207,11 +208,8 @@ class UserController {
     public function getUser(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $id = intval($args['id']);
-        var_dump($args);
         $userRepo = $entityManager->getRepository('User');
-        var_dump($id);
-        $user = $userRepo->findAll();
-        var_dump($user);
+        $user = $userRepo->findOneBy(array("idUser" => $id));
         if($user) {
             $data = [
                 'idUser' => $user->getIdUser(),
