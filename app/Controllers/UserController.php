@@ -236,6 +236,21 @@ class UserController {
         return $response;
     }
 
+    public function logOff(Request $request, Response $response, array $args) {
+        require_once  __DIR__ . './../../bootstrap.php';
+        $userRepo = $entityManager->getRepository('User');
+        $body = $request->getParsedBody();
+        $user = $userRepo->findOneBy(array('idUser' => $body['idUser']));
+        if($user) {
+            $response->getBody()->write(json_encode([
+                'success' => true,
+            ]));
+        } else {
+            $response = $response->withStatus(401);
+        }
+        $response->withHeader("Content-Type", "application/json");
+        return $response;
+    }
     // create JWT
     function createJwt (Response $response, User $user) : Response {
         $userid = $user->getIdUser();
