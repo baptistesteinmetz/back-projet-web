@@ -83,7 +83,8 @@ class ProductController {
         require_once __DIR__ . './../../bootstrap.php';
         $body = $request->getParsedBody();
         var_dump($body);
-        var_dump($body['products']);
+        $products = json_decode($body['products']);
+        var_dump($products);
         $price = 0;
         foreach($products as $product) {
             /** @var Product $product  */
