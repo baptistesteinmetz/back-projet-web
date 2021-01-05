@@ -85,7 +85,7 @@ class ProductController {
         $products = json_decode($body['products']);
         // $price = 0;
         foreach($products as $product) {
-            var_dump($product);
+            var_dump(json_decode($product));
         }
 
         // if($price == 0){
