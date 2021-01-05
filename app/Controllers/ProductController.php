@@ -89,10 +89,9 @@ class ProductController {
             ]));
         }
         else {
-            $data = 'ok';
             $response->getBody()->write(json_encode([
                 "success" => true,
-                'data' => $data
+                'data' => $price
             ]));
         }
         return $response
