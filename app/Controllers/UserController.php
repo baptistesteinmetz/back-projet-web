@@ -49,13 +49,11 @@ class UserController {
                 $response->getBody()->write(json_encode([
                     "success" => false
                 ]));     
-                $response = $response->withStatus(401);
             }
         } else {
             $response->getBody()->write(json_encode([
                 "success" => false,
             ]));
-            $response = $response->withStatus(401);
         }
         return $response;
     }
@@ -92,7 +90,6 @@ class UserController {
             $result = [
                 "success" => false,
             ];
-            $response = $response->withStatus(401);
         }
         else {
             $user = new User();
@@ -170,7 +167,6 @@ class UserController {
             $result = [
                 "success" => false,
             ];
-            $response = $response->withStatus(401);
         }
         else {
             $user = $userRepo->findOneBy(array('idUser' => $idUser));
@@ -232,7 +228,6 @@ class UserController {
             $response->getBody()->write(json_encode([
                 'success' => false,
             ]));
-            $response = $response->withStatus(401);
         }
         $response->withHeader("Content-Type", "application/json");
         return $response;
@@ -251,7 +246,6 @@ class UserController {
             $result = [
                 'success' => false,
             ];
-            $response = $response->withStatus(401);
         }
         $response->getBody()->write(json_encode($result));
         $response->withHeader("Content-Type", "application/json");
@@ -273,7 +267,6 @@ class UserController {
             $result = [
                 'success' => false,
             ];
-            $response = $response->withStatus(401);
         }
         $response->getBody()->write(json_encode($result));
         $response->withHeader("Content-Type", "application/json");
