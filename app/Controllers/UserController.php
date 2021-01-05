@@ -246,7 +246,6 @@ class UserController {
             $result = [
                 'success' => false,
             ];
-            $response = $response->withStatus(401);
         }
         $response->getBody()->write(json_encode($result));
         $response->withHeader("Content-Type", "application/json");
