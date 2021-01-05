@@ -85,25 +85,25 @@ class ProductController {
         var_dump($body);
         $products = json_decode($body['products']);
         var_dump($products);
-        $price = 0;
-        foreach($products as $product) {
-            /** @var Product $product  */
-            $price += $product->getPrice();
-        }
+        // $price = 0;
+        // foreach($products as $product) {
+        //     /** @var Product $product  */
+        //     $price += $product->getPrice();
+        // }
 
-        if($price == 0){
-            $response->getBody()->write(json_encode([
-                "success" => false,
-            ]));
-            $response = $response->withStatus(401);
-        }
-        else {
-            $data = 'ok';
-            $response->getBody()->write(json_encode([
-                "success" => true,
-                'data' => $data
-            ]));
-        }
+        // if($price == 0){
+        //     $response->getBody()->write(json_encode([
+        //         "success" => false,
+        //     ]));
+        //     $response = $response->withStatus(401);
+        // }
+        // else {
+        //     $data = 'ok';
+        //     $response->getBody()->write(json_encode([
+        //         "success" => true,
+        //         'data' => $data
+        //     ]));
+        // }
         return $response
         ->withHeader("Content-Type", "application/json")
         ->withHeader('Access-Control-Expose-Headers', '*');
