@@ -84,9 +84,8 @@ class ProductController {
         $body = $request->getParsedBody();
         $products = json_decode($body['products']);
         // $price = 0;
-        /** @var Product $product */
         foreach($products as $product) {
-            $test = $product->getPrice();
+            $test = $product['price'];
             var_dump($test);
         }
 
