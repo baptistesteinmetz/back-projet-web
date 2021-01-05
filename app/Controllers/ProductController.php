@@ -82,11 +82,8 @@ class ProductController {
     public function buyArticle(Request $request, Response $response, $args) {
         require_once __DIR__ . './../../bootstrap.php';
         $body = $request->getParsedBody();
-        var_dump(json_decode($body));
-        
-        foreach($body as $key => $value){
-            ${$key} = $value ?? "";
-        }
+        $products = json_decode($body);
+
         $price = 0;
         foreach($products as $product) {
             /** @var Product $product  */
@@ -100,10 +97,9 @@ class ProductController {
             $response = $response->withStatus(401);
         }
         else {
-            $data = 'ok';
             $response->getBody()->write(json_encode([
                 "success" => true,
-                'data' => $data
+                'data' => $price
             ]));
         }
         return $response
