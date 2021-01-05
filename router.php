@@ -25,6 +25,7 @@ return function(App $app) {
         $group->post("/logoff", "App\Controllers\UserController:logoff");
         $group->post("/register", "App\Controllers\UserController:register");
         $group->post("/update", "App\Controllers\UserController:update");
+        $group->post("/delete", "App\Controllers\UserController:delete");
         $group->get("/get/{id}", "App\Controllers\UserController:getUser");
         
     });

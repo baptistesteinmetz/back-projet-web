@@ -242,15 +242,43 @@ class UserController {
         $body = $request->getParsedBody();
         $user = $userRepo->findOneBy(array('idUser' => $body['idUser']));
         if($user) {
-            $response->getBody()->write(json_encode([
+            $result = [
                 'success' => true,
-            ]));
+            ];
         } else {
+            $result = [
+                'success' => false,
+            ];
             $response = $response->withStatus(401);
         }
+        $response->getBody()->write(json_encode($result));
         $response->withHeader("Content-Type", "application/json");
         return $response;
     }
+
+    public function delete(Request $request, Response $response, array $args) {
+        require_once  __DIR__ . './../../bootstrap.php';
+        $userRepo = $entityManager->getRepository('User');
+        $body = $request->getParsedBody();
+        $user = $userRepo->findOneBy(array('idUser' => $body['idUser']));
+        if($user) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+            $result = [
+                'success' => true,
+            ];
+        } else {
+            $result = [
+                'success' => false,
+            ];
+            $response = $response->withStatus(401);
+        }
+        $response->getBody()->write(json_encode($result));
+        $response->withHeader("Content-Type", "application/json");
+        return $response;
+    }
+
+    
     // create JWT
     function createJwt (Response $response, User $user) : Response {
         $userid = $user->getIdUser();
