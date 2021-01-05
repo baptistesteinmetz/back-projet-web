@@ -54,7 +54,6 @@ class UserController {
         } else {
             $response->getBody()->write(json_encode([
                 "success" => false,
-                "body" => $user,
             ]));
             $response = $response->withStatus(401);
         }
@@ -230,6 +229,9 @@ class UserController {
             ]));
         }
         else {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+            ]));
             $response = $response->withStatus(401);
         }
         $response->withHeader("Content-Type", "application/json");
@@ -278,7 +280,7 @@ class UserController {
         return $response;
     }
 
-    
+
     // create JWT
     function createJwt (Response $response, User $user) : Response {
         $userid = $user->getIdUser();
