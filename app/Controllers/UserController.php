@@ -73,7 +73,7 @@ class UserController {
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login) ||$login == "")   {
             $err = true;
         }
-        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$adress) ||$adress == "")  {
+        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$address) ||$address == "")  {
             $err=true;
         }
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$mail) ||$mail == "")   {
@@ -96,7 +96,7 @@ class UserController {
             $user
             ->setFirstname($firstname)
             ->setLastname($lastname)
-            ->setAddress($adress)
+            ->setAddress($address)
             ->setCity($city)
             ->setZipcode($zipcode)
             ->setMail($mail)
@@ -150,7 +150,7 @@ class UserController {
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login) ||$login == "")   {
             $err = true;
         }
-        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$adress) ||$adress == "")  {
+        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$address) ||$address == "")  {
             $err=true;
         }
         if (!preg_match("/[a-zA-Z0-9]{1,20}/",$mail) ||$mail == "")   {
@@ -173,7 +173,7 @@ class UserController {
             $user
             ->setFirstname($firstname)
             ->setLastname($lastname)
-            ->setAddress($adress)
+            ->setAddress($address)
             ->setCity($city)
             ->setZipcode($zipcode)
             ->setMail($mail)
