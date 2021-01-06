@@ -26,7 +26,7 @@ class ProductController {
                     'primary_color' => $product->getPrimaryColor(),
                     'secondary_color' => $product->getSecondaryColor(),
                     'platform' => $product->getPlatform(),
-                    'release_date' => $product->getReleaseDate(),
+                    'release_date' => date_format($product->getReleaseDate(), 'd/m/Y'),
                 ];
             }
             $response->getBody()->write(json_encode([
@@ -61,7 +61,7 @@ class ProductController {
                 'primary_color' => $product->getPrimaryColor(),
                 'secondary_color' => $product->getSecondaryColor(),
                 'platform' => $product->getPlatform(),
-                'release_date' => $product->getReleaseDate(),
+                'release_date' => date_format($product->getReleaseDate(), 'd/m/Y'),
             ];
             $response->getBody()->write(json_encode([
                 "success" => true,
