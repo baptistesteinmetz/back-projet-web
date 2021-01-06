@@ -185,7 +185,7 @@ class UserController {
             ;
             $result = [
                 "success" => true,
-                "user" => $body,
+                "data" => $body,
             ];
             $entityManager->persist($user);
             $entityManager->flush();
