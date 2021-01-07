@@ -38,23 +38,23 @@ class UserController {
                     'country' => $user->getCountry(),
                     'phone' => $user->getPhone(),
                 ];
-                $response->getBody()->write(json_encode([
+                $results = [
                     "success" => true,
                     "data" => $data,
-                ]));
+                ];
                 $response
                 ->withHeader("Content-Type", "application/json");
             } else {     
-                $response->getBody()->write(json_encode([
-                    "success" => false
-                ]));     
+                $results = [
+                    "success" => false,
+                ];     
             }
         } else {
-            $response->getBody()->write(json_encode([
+            $results = [
                 "success" => false,
-            ]));
+            ];   
         }
-        return $response;
+        return $response->getBody()->write(json_encode($results));
     }
 
     public function register(Request $request, Response $response, array $args) {
@@ -66,10 +66,9 @@ class UserController {
             ${$key} = $value ?? "";
         }
         $user = $userRepo->findOneBy(array('login' => $login));
-        var_dump($user);
         if($user) {
             $err = true;
-            $result = [
+            $results = [
                 "success" => false,
                 "data" => "User already exists",
             ];
@@ -95,7 +94,7 @@ class UserController {
                 $err = true;
             }
             if($err) {
-                $result = [
+                $results = [
                     "success" => false,
                     "data" => "There was an error",
                 ];
@@ -133,16 +132,15 @@ class UserController {
                     'country' => $user->getCountry(),
                     'phone' => $user->getPhone(),
                 ];
-                $result = [
+                $results = [
                     "success" => true,
                     "data" => $data,
                 ];
-                $response->getBody()->write(json_encode($result));
-                $response->withHeader("Content-Type", "application/json");
-                // ->withHeader('Access-Control-Expose-Headers', '*');
             }
 
         }
+        $response->getBody()->write(json_encode($results));
+        $response->withHeader("Content-Type", "application/json");
         return $response;
     }
 
@@ -200,10 +198,9 @@ class UserController {
             ];
             $entityManager->persist($user);
             $entityManager->flush();
-            $response->getBody()->write(json_encode($result));
-            $response->withHeader("Content-Type", "application/json");
-            // ->withHeader('Access-Control-Expose-Headers', '*');
         }
+        $response->getBody()->write(json_encode($results));
+        $response->withHeader("Content-Type", "application/json");
         return $response;
     }
 
@@ -230,16 +227,17 @@ class UserController {
                 'phone' => $user->getPhone(),
             ];
             $response = $this->createJwT($response, $user);
-            $response->getBody()->write(json_encode([
+            $results = [
                 'success' => true,
                 'data' => $data
-            ]));
+            ];
         }
         else {
-            $response->getBody()->write(json_encode([
+            $results = [
                 'success' => false,
-            ]));
+            ];
         }
+        $response->getBody()->write(json_encode($results));
         $response->withHeader("Content-Type", "application/json");
         return $response;
     }
