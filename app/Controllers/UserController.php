@@ -19,38 +19,33 @@ class UserController {
         $body = $request->getParsedBody();
         $login = $body['login'];
         $password = $body['password'];
-        if (!$err) {
-            $userRepo = $entityManager->getRepository('User');
-            $user = $userRepo->findOneBy(array('login' => $login, 'password' => $password)) ?? $userRepo->findOneBy(array('mail' => $login, 'password' => $password));
-            if ($user) {
-                $response = $this->createJwt($response, $user);                
-                $data = [
-                    'idUser' => $user->getIdUser(),
-                    'firstname' => $user->getFirstname(),
-                    'lastname' => $user->getLastname(),
-                    'login' => $user->getLogin(),
-                    'password' => $user->getPassword(),
-                    'address' => $user->getAddress(),
-                    'zipcode' => $user->getZipcode(),
-                    'city' => $user->getCity(),
-                    'gender' => $user->getGender(),
-                    'mail' => $user->getMail(),
-                    'country' => $user->getCountry(),
-                    'phone' => $user->getPhone(),
-                ];
-                $results = [
-                    "success" => true,
-                    "data" => $data,
-                ];
-            } else {     
-                $results = [
-                    "success" => false,
-                ];     
-            }
-        } else {
+        $userRepo = $entityManager->getRepository('User');
+        $user = $userRepo->findOneBy(array('login' => $login, 'password' => $password)) ?? $userRepo->findOneBy(array('mail' => $login, 'password' => $password));
+        if ($user) {
+            $response = $this->createJwt($response, $user);                
+            $data = [
+                'idUser' => $user->getIdUser(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'login' => $user->getLogin(),
+                'password' => $user->getPassword(),
+                'address' => $user->getAddress(),
+                'zipcode' => $user->getZipcode(),
+                'city' => $user->getCity(),
+                'gender' => $user->getGender(),
+                'mail' => $user->getMail(),
+                'country' => $user->getCountry(),
+                'phone' => $user->getPhone(),
+            ];
+            $results = [
+                "success" => true,
+                "data" => $data,
+            ];
+        } else {     
             $results = [
                 "success" => false,
-            ];   
+                "data" => "Login not possible",
+            ];     
         }
         $response->getBody()->write(json_encode($results));
         $response->withHeader("Content-Type", "application/json");
@@ -175,6 +170,7 @@ class UserController {
         if($err) {
             $result = [
                 "success" => false,
+                "data" => "We couldn't update your account."
             ];
         }
         else {
@@ -250,10 +246,12 @@ class UserController {
         if($user) {
             $result = [
                 'success' => true,
+                "data" => "Successfully logged off.",
             ];
         } else {
             $result = [
                 'success' => false,
+                "data" => "We couldn't log you off.",
             ];
         }
         $response->getBody()->write(json_encode($result));
@@ -271,10 +269,12 @@ class UserController {
             $entityManager->flush();
             $result = [
                 'success' => true,
+                'data' => "Account successfully deleted."
             ];
         } else {
             $result = [
                 'success' => false,
+                'data' => "There was an error."
             ];
         }
         $response->getBody()->write(json_encode($result));
