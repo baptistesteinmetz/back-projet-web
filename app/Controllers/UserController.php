@@ -65,7 +65,7 @@ class UserController {
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
         }
-        $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
+        $user = $userRepo->findOneBy(array('login' => $login));
         var_dump($user);
         if($user) {
             $err = true;
