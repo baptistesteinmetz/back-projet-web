@@ -17,14 +17,19 @@ class UserController {
         require_once  __DIR__ . './../../bootstrap.php';
         $err=false;
         $body = $request->getParsedBody();
-        foreach($body as $key => $value){
-            ${$key} = $value ?? "";
-        }
-        var_dump($err);
+        $login = $body['login'];
+        $password = $body['password'];
+        var_dump($password);
+        var_dump($login);
+        
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
-            var_dump($user);
+            var_dump($user->getLogin());
+            var_dump($user->getPassword());
+            var_dump($user->getMail());
+            var_dump($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword());
+
             if ($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
