@@ -20,9 +20,11 @@ class UserController {
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
         }
+        var_dump($err);
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
+            var_dump($user);
             if ($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
