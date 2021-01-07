@@ -21,8 +21,8 @@ class UserController {
         $password = $body['password'];
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
-            $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
-            if ($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword()) {
+            $user = $userRepo->findOneBy(array('login' => $login, 'password' => $password)) ?? $userRepo->findOneBy(array('mail' => $login, 'password' => $password));
+            if ($user) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
                     'idUser' => $user->getIdUser(),
@@ -66,7 +66,7 @@ class UserController {
             ${$key} = $value ?? "";
         }
         $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
-
+        var_dump($user);
         if($user) {
             $err = true;
             $result = [
