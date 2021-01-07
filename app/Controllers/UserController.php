@@ -42,8 +42,6 @@ class UserController {
                     "success" => true,
                     "data" => $data,
                 ];
-                $response
-                ->withHeader("Content-Type", "application/json");
             } else {     
                 $results = [
                     "success" => false,
@@ -54,7 +52,9 @@ class UserController {
                 "success" => false,
             ];   
         }
-        return $response->getBody()->write(json_encode($results));
+        $response->getBody()->write(json_encode($results));
+        $response->withHeader("Content-Type", "application/json");
+        return $response;
     }
 
     public function register(Request $request, Response $response, array $args) {
