@@ -19,17 +19,9 @@ class UserController {
         $body = $request->getParsedBody();
         $login = $body['login'];
         $password = $body['password'];
-        var_dump($password);
-        var_dump($login);
-        
         if (!$err) {
             $userRepo = $entityManager->getRepository('User');
             $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
-            var_dump($user->getLogin());
-            var_dump($user->getPassword());
-            var_dump($user->getMail());
-            var_dump($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword());
-
             if ($user && ($login == $user->getLogin() || $login == $user->getMail()) && $password == $user->getPassword()) {
                 $response = $this->createJwt($response, $user);                
                 $data = [
@@ -68,76 +60,88 @@ class UserController {
     public function register(Request $request, Response $response, array $args) {
         require_once  __DIR__ . './../../bootstrap.php';
         $userRepo = $entityManager->getRepository('User');
-        $body = $request->getParsedBody();
         $err = false;
+        $body = $request->getParsedBody();
         foreach($body as $key => $value){
             ${$key} = $value ?? "";
         }
-        // TODO : pregmatch à améliorer
-        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
-            $err=true;
-        }
-        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login) ||$login == "")   {
-            $err = true;
-        }
-        if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$address) ||$address == "")  {
-            $err=true;
-        }
-        if (!preg_match("/[a-zA-Z0-9]{1,20}/",$mail) ||$mail == "")   {
-            $err = true;
-        }
-        if (!preg_match("/[a-zA-Z]/",$firstname) ||$firstname == "")  {
-            $err=true;
-        }
-        if (!preg_match("/[a-zA-Z]/",$lastname) ||$lastname == "")   {
-            $err = true;
-        }
+        $user = $userRepo->findOneBy(array('login' => $login)) ?? $userRepo->findOneBy(array('mail' => $login));
 
-        if($err) {
+        if($user) {
+            $err = true;
             $result = [
                 "success" => false,
+                "data" => "User already exists",
             ];
         }
         else {
-            $user = new User();
-            $user
-            ->setFirstname($firstname)
-            ->setLastname($lastname)
-            ->setAddress($address)
-            ->setCity($city)
-            ->setZipcode($zipcode)
-            ->setMail($mail)
-            ->setPhone($phone)
-            ->setCountry($country)
-            ->setPassword($password)
-            ->setLogin($login)
-            ->setGender($gender)
-            ;
+            // TODO : pregmatch à améliorer
+            if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
+                $err=true;
+            }
+            if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login) ||$login == "")   {
+                $err = true;
+            }
+            if (!preg_match("/[a-zA-Z0-9-]{1,20}/",$address) ||$address == "")  {
+                $err=true;
+            }
+            if (!preg_match("/[a-zA-Z0-9]{1,20}/",$mail) ||$mail == "")   {
+                $err = true;
+            }
+            if (!preg_match("/[a-zA-Z]/",$firstname) ||$firstname == "")  {
+                $err=true;
+            }
+            if (!preg_match("/[a-zA-Z]/",$lastname) ||$lastname == "")   {
+                $err = true;
+            }
+            if($err) {
+                $result = [
+                    "success" => false,
+                    "data" => "There was an error",
+                ];
+            }
+            else {
+                $user = new User();
+                $user
+                ->setFirstname($firstname)
+                ->setLastname($lastname)
+                ->setAddress($address)
+                ->setCity($city)
+                ->setZipcode($zipcode)
+                ->setMail($mail)
+                ->setPhone($phone)
+                ->setCountry($country)
+                ->setPassword($password)
+                ->setLogin($login)
+                ->setGender($gender)
+                ;
+    
+                $entityManager->persist($user);
+    
+                $entityManager->flush();
+                $data = [
+                    'idUser' => $user->getIdUser(),
+                    'firstname' => $user->getFirstname(),
+                    'lastname' => $user->getLastname(),
+                    'login' => $user->getLogin(),
+                    'password' => $user->getPassword(),
+                    'address' => $user->getAddress(),
+                    'zipcode' => $user->getZipcode(),
+                    'city' => $user->getCity(),
+                    'gender' => $user->getGender(),
+                    'mail' => $user->getMail(),
+                    'country' => $user->getCountry(),
+                    'phone' => $user->getPhone(),
+                ];
+                $result = [
+                    "success" => true,
+                    "data" => $data,
+                ];
+                $response->getBody()->write(json_encode($result));
+                $response->withHeader("Content-Type", "application/json");
+                // ->withHeader('Access-Control-Expose-Headers', '*');
+            }
 
-            $entityManager->persist($user);
-
-            $entityManager->flush();
-            $data = [
-                'idUser' => $user->getIdUser(),
-                'firstname' => $user->getFirstname(),
-                'lastname' => $user->getLastname(),
-                'login' => $user->getLogin(),
-                'password' => $user->getPassword(),
-                'address' => $user->getAddress(),
-                'zipcode' => $user->getZipcode(),
-                'city' => $user->getCity(),
-                'gender' => $user->getGender(),
-                'mail' => $user->getMail(),
-                'country' => $user->getCountry(),
-                'phone' => $user->getPhone(),
-            ];
-            $result = [
-                "success" => true,
-                "data" => $data,
-            ];
-            $response->getBody()->write(json_encode($result));
-            $response->withHeader("Content-Type", "application/json");
-            // ->withHeader('Access-Control-Expose-Headers', '*');
         }
         return $response;
     }
