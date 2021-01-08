@@ -86,6 +86,7 @@ class ProductController {
         if($price == 0){
             $response->getBody()->write(json_encode([
                 "success" => false,
+                'data' => "Order could not be processed",
             ]));
         }
         else {
