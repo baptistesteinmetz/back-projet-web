@@ -168,7 +168,7 @@ class UserController {
         }
 
         if($err) {
-            $result = [
+            $results = [
                 "success" => false,
                 "data" => "We couldn't update your account."
             ];
@@ -188,7 +188,7 @@ class UserController {
             ->setLogin($login)
             ->setGender($gender)
             ;
-            $result = [
+            $results = [
                 "success" => true,
                 "data" => $body,
             ];
