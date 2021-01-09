@@ -15,7 +15,7 @@ class CorsMiddleware
         $response = $response
         ->withHeader("Content-Type", "application/json")
         ->withHeader('Access-Control-Allow-Credentials', 'true')
-        ->withHeader('Access-Control-Allow-Origin', "*")
+        ->withHeader('Access-Control-Allow-Origin', "https://projet-steinmetz-baptiste.herokuapp.com")
         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
         ->withHeader('Access-Control-Expose-Headers', '*')
