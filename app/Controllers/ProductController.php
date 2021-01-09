@@ -87,10 +87,10 @@ class ProductController {
             ]));
         }
         else {
-            $response->getBody()->write(json_encode([
-                "success" => true,
-                'data' => $price
-            ]));
+            // $response->getBody()->write(json_encode([
+            //     "success" => true,
+            //     'data' => $price
+            // ]));
             $response->withStatus(401);
         }
         return $response
