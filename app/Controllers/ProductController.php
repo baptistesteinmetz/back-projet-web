@@ -91,6 +91,7 @@ class ProductController {
                 "success" => true,
                 'data' => $price
             ]));
+            $response->withStatus(401);
         }
         return $response
         ->withHeader("Content-Type", "application/json")
