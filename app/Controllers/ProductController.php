@@ -87,11 +87,10 @@ class ProductController {
             ]));
         }
         else {
-            // $response->getBody()->write(json_encode([
-            //     "success" => true,
-            //     'data' => $price
-            // ]));
-            return $response->withStatus(401);
+            $response->getBody()->write(json_encode([
+                "success" => true,
+                'data' => $price
+            ]));
         }
         return $response
         ->withHeader("Content-Type", "application/json")
