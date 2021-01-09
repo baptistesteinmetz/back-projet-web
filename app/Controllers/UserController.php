@@ -69,7 +69,6 @@ class UserController {
             ];
         }
         else {
-            // TODO : pregmatch à améliorer
             if (!preg_match("/[a-zA-Z0-9]{1,20}/",$password ||$password == ""))  {
                 $err=true;
             }
